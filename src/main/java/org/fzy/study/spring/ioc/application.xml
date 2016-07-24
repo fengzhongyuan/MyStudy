@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+
+	<bean id="priceGetter" class="org.fzy.study.spring.ioc.PriceGetter">
+	</bean>
+	
+	<bean id="car1" class="org.fzy.study.spring.ioc.Car">
+		<property name="changshang">
+			<value>长安福特</value>
+		</property>
+		<property name="chexing">
+			<value>focus</value>
+		</property>
+		<property name="speed" value="190"></property>
+		<property name="price" value="130000"></property>
+	</bean>
+	
+	<bean id="car2" class="org.fzy.study.spring.ioc.Car">
+		<constructor-arg>
+			<value type="java.lang.String" >雪弗兰</value>
+		</constructor-arg>
+		
+		<constructor-arg type="java.lang.String" value="景程">
+		</constructor-arg>
+		
+		<constructor-arg>
+			<value type="float">150000</value>
+		</constructor-arg>
+		<property name="speed" value="500"></property>
+		<property name="price" value="#{T(java.lang.Math).random()}"></property>
+	</bean>
+	
+	<bean id="person1" class="org.fzy.study.spring.ioc.Person" init-method="init" destroy-method="destroyMet">
+		
+		<property name="name" >
+			<value><![CDATA[<fzy>]]></value>
+		</property>
+		<property name="cars">
+			<list>
+				<value >#{car1}</value>
+				<ref bean="#{'car2'}"/>
+			</list>
+		</property>
+		
+		<property name="carMap">
+			<map>
+				<entry key="car__1" value="#{car1}"></entry>
+				<entry key="car__2" value-ref="car2"></entry>
+			</map>
+		</property>
+		
+		<property name="prop">
+			<props>
+				<prop key="wokao">ahaha
+				</prop>
+			</props>
+		</property>
+	</bean>
+	
+	<!-- <bean class="org.fzy.study.spring.ioc.MyBeanPostProcessor"></bean> -->
+	
+	<bean class="org.fzy.study.spring.ioc.MyInstantiationAwareBeanPostProcessor"></bean>
+</beans>
